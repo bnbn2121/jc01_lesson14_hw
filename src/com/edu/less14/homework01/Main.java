@@ -34,10 +34,11 @@ public class Main {
 		PrinterUtil.printListAirlines("Расписание рейсов после изменения времени третьего рейса на 8-37",schedule.getAirlines());
 		
 		//проверяем работу фильтра
-		schedule.filter("Москва", 10, 10, true, DayOfWeek.TUESDAY);
+		checkFilter(schedule, "Москва", 10, 10, true, DayOfWeek.TUESDAY);
 
 	}
 	
+	//доп метод для заполнения тестовыми данными
 	public static void fillList(List<Airline> list) {
 		list.add(new Airline("Москва (SVO)", "SU-144", "Airbus A320", 18, 37,
 				new DayOfWeek[] { DayOfWeek.FRIDAY, DayOfWeek.TUESDAY, DayOfWeek.SUNDAY }));
@@ -50,5 +51,15 @@ public class Main {
 		list.add(new Airline("Гомель (HML)", "LW-422", "Airbus A300", 13, 8,
 				new DayOfWeek[] { DayOfWeek.WEDNESDAY, DayOfWeek.SUNDAY}));
 	}
-
+	
+	//доп метод для проверки фильтра
+	public static void checkFilter(Schedule schedule, String destination, int hour, int minute, boolean searchAfterTime, DayOfWeek day) {
+		List<Airline> filtredAirlines = schedule.filter(destination,hour,minute, searchAfterTime, day);
+		if (filtredAirlines == null) {
+			System.out.println("По данным параметрам нет подходящих рейсов");
+		} else {
+			PrinterUtil.printFilterCriteria(destination,hour,minute, searchAfterTime, day);
+			PrinterUtil.printListAirlines("Рейсы по выбранным параметрам:", filtredAirlines);
+		}
+	}
 }
