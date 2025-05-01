@@ -67,13 +67,12 @@ public class Schedule {
 		return false;
 	}
 	
-	public void filter(String destination, int hour, int minute, boolean searchAfterTime, DayOfWeek day) {
+	public List<Airline> filter(String destination, int hour, int minute, boolean searchAfterTime, DayOfWeek day) {
 		List<Airline> filtredAirlines = FilterUtil.generalFilter(this, destination, hour, minute, searchAfterTime, day);
 		if (filtredAirlines == null) {
-			System.out.println("По данным параметрам нет подходящих рейсов");
+			return null;
 		} else {
-			PrinterUtil.printFilterCriteria(destination, hour, minute, searchAfterTime, day);
-			PrinterUtil.printListAirlines("Рейсы по выбранным параметрам:", filtredAirlines);
+			return filtredAirlines;
 		}
 	}
 	
